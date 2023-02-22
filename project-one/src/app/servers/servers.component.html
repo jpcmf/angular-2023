@@ -1,8 +1,56 @@
-<button
-  [disabled]="allowNewServer"
-  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
->
-  Add server
-</button>
-<app-server></app-server>
-<app-server></app-server>
+<div class="flex flex-row flex-wrap py-4">
+  <aside class="w-full sm:w-1/3 md:w-1/4 px-2">
+    <div class="sticky top-0 p-4 w-full">
+      <!-- navigation -->
+      <ul class="flex flex-col overflow-hidden">
+        <li>Menu 1</li>
+        <li>Menu 2</li>
+        <li>Menu 3</li>
+      </ul>
+    </div>
+  </aside>
+  <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
+    <!-- content area -->
+    <label
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      for="servername"
+      >Server Name</label
+    >
+    <input
+      type="text"
+      name="servername"
+      id="servername"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      (input)="onUpdateServerName($event)"
+    />
+
+    <br />
+
+    <input
+      type="text"
+      name="servername"
+      id="servername"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      [(ngModel)]="serverName"
+    />
+
+    {{ serverName }}
+
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+
+    <button
+      [disabled]="!allowNewServer"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
+      (click)="onCreateServer()"
+    >
+      Add server
+    </button>
+
+    <p>{{ serverCreationStatus }}</p>
+
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+
+    <app-server></app-server>
+    <app-server></app-server>
+  </main>
+</div>
