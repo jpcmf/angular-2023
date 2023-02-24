@@ -46,7 +46,10 @@
       Add server
     </button>
 
-    <p>{{ serverCreationStatus }}</p>
+    <!-- <p>{{ serverCreationStatus }}</p> -->
+    <p *ngIf="serverCreated">
+      Server was created! Server name is {{ serverName }}
+    </p>
 
     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
 
