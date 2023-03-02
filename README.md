@@ -1,6 +1,6 @@
 # Angular 2023
 
-## :gear: Projects folders
+## :file_folder: Projects folders
 
 - project-one: First steps with Angular
 - project-two: Book Store App with Angular
