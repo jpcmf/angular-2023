@@ -1,15 +1,29 @@
-<div class="grid border border-blue-500">
-  <button>New Recipe</button>
+<div class="grid">
+  <button
+    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
+  >
+    New Recipe
+  </button>
 </div>
 
-<div class="grid border border-blue-500">
-  <a href="#" class="">
-    <div>
-      <h4>Recipe Name</h4>
-      <p>Description</p>
+<hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
+
+<div class="grid">
+  <a
+    href="#"
+    class="border border-gray-300 flex px-3 py-3 hover:bg-gray-200"
+    *ngFor="let recipe of recipes"
+  >
+    <div class="flex flex-col flex-1">
+      <h4 class="font-medium text-2xl">{{ recipe.name }}</h4>
+      <p>{{ recipe.description }}</p>
     </div>
-    <div>
-      <img src="" alt="" />
+    <div class="flex">
+      <img
+        class="object-cover h-24 w-24"
+        [src]="recipe.imagePath"
+        alt="{{ recipe.name }}"
+      />
     </div>
   </a>
   <app-recipe-item></app-recipe-item>

@@ -1,1 +1,66 @@
-<p>recipes-detail works!</p>
+<div class="grid">
+  <img src="" alt="" class="object-cover h-24 w-24" />
+</div>
+
+<div class="grid">
+  <h2 class="text-4xl font-medium">Recipe Name</h2>
+</div>
+
+<div class="grid">
+  <div class="relative">
+    <button
+      class="flex text-gray-500 bg-gray-200 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+      id="dropdown-menu"
+      aria-haspopup="true"
+    >
+      Manage Recipe
+      <svg
+        class="ml-2 h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+    <div
+      class="hidden absolute z-10 left-0 mt-2 w-48 bg-white rounded-md shadow-lg origin-top-right divide-y divide-gray-100 focus:outline-none"
+      role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="dropdown-menu"
+    >
+      <div class="py-1" role="none">
+        <a
+          href="#"
+          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
+          role="menuitem"
+          >Add Ingredients to Shopping List</a
+        >
+        <a
+          href="#"
+          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
+          role="menuitem"
+          >Edit Recipe</a
+        >
+        <a
+          href="#"
+          class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
+          role="menuitem"
+          >Delete Recipe</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <h2>Description</h2>
+</div>
+
+<div class="grid">
+  <h2>Ingredients</h2>
+</div>
