@@ -9,22 +9,8 @@
 <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
 
 <div class="grid">
-  <a
-    href="#"
-    class="border border-gray-300 flex px-3 py-3 hover:bg-gray-200"
+  <app-recipe-item
     *ngFor="let recipe of recipes"
-  >
-    <div class="flex flex-col flex-1">
-      <h4 class="font-medium text-2xl">{{ recipe.name }}</h4>
-      <p>{{ recipe.description }}</p>
-    </div>
-    <div class="flex">
-      <img
-        class="object-cover h-24 w-24"
-        [src]="recipe.imagePath"
-        alt="{{ recipe.name }}"
-      />
-    </div>
-  </a>
-  <app-recipe-item></app-recipe-item>
+    [recipe]="recipe"
+  ></app-recipe-item>
 </div>
