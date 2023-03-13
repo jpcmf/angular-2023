@@ -10,7 +10,8 @@
 
 <div class="grid">
   <app-recipe-item
-    *ngFor="let recipe of recipes"
+    *ngFor="let recipe of recipes; let i = index"
     [recipe]="recipe"
+    (recipeSelected)="onRecipeSelected(recipe, i)"
   ></app-recipe-item>
 </div>

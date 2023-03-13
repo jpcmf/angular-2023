@@ -1,8 +1,14 @@
 <div class="grid grid-flow-col gap-4">
   <div class="row-span-3">
-    <app-recipe-list></app-recipe-list>
+    <app-recipe-list
+      (recipeWasSelected)="selectedRecipe = $event"
+    ></app-recipe-list>
   </div>
   <div class="col-span-2">
-    <app-recipe-detail></app-recipe-detail>
+    <app-recipe-detail
+      *ngIf="selectedRecipe; else infoText"
+      [recipe]="selectedRecipe"
+    ></app-recipe-detail>
+    <ng-template #infoText>Please select a recipe</ng-template>
   </div>
 </div>

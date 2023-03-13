@@ -1,9 +1,13 @@
 <div class="grid">
-  <img src="" alt="" class="object-cover h-24 w-24" />
+  <img
+    [src]="recipe.imagePath"
+    alt="{{ recipe.name }}"
+    class="object-cover w-48 h-48"
+  />
 </div>
 
 <div class="grid">
-  <h2 class="text-4xl font-medium">Recipe Name</h2>
+  <h2 class="text-4xl font-medium">{{ recipe.name }}</h2>
 </div>
 
 <div class="grid">
@@ -58,7 +62,7 @@
 </div>
 
 <div class="grid">
-  <h2>Description</h2>
+  <h2>{{ recipe.description }}</h2>
 </div>
 
 <div class="grid">
