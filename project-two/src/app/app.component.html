@@ -1,7 +1,7 @@
-<app-header></app-header>
+<app-header (featureSelected)="onNavigate($event)"></app-header>
 <div class="container mx-auto px-4 py-5">
-  <app-recipes></app-recipes>
-  <app-shopping-list></app-shopping-list>
+  <app-recipes *ngIf="loadedFeature === 'recipe'"></app-recipes>
+  <app-shopping-list *ngIf="loadedFeature !== 'recipe'"></app-shopping-list>
 </div>
 <footer class="container mx-auto px-4">
   <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />

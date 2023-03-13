@@ -7,11 +7,13 @@
     <nav class="hidden md:flex items-center w-full">
       <div class="px-8">
         <a
+          (click)="onSelect('recipe')"
           href="#"
           class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-md text-sm font-medium"
           >Recipes</a
         >
         <a
+          (click)="onSelect('shopping-list')"
           href="#"
           class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-md text-sm font-medium"
           >Shooping List</a
