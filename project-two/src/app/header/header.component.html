@@ -25,6 +25,8 @@
           class="flex text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
           id="dropdown-menu"
           aria-haspopup="true"
+          (isMenuOpen)="toggleVisible($event)"
+          appDropdown
         >
           Manage
           <svg
@@ -45,6 +47,7 @@
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="dropdown-menu"
+          [ngClass]="visibilityClasses"
         >
           <div class="py-1" role="none">
             <a
