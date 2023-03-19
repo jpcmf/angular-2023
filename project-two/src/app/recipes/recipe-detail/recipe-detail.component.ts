@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -12,7 +13,7 @@ export class RecipeDetailComponent implements OnInit {
 
   @Input() recipe: Recipe;
 
-  contructor() {}
+  constructor(private _recipeService: RecipeService) {}
 
   ngOnInit(): void {
     this.setVisibilityClasses();
@@ -25,5 +26,9 @@ export class RecipeDetailComponent implements OnInit {
 
   private setVisibilityClasses(): void {
     this.visibilityClasses = { hidden: !this.isVisible, '': this.isVisible };
+  }
+
+  onAddToShoppingList(): void {
+    this._recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
   }
 }
