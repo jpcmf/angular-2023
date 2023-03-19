@@ -2,8 +2,8 @@
 
 ## :file_folder: Project folders
 
-- project-one: First steps with Angular
-- project-two: Recipe Book App with Angular
+- project-one: First steps
+- project-two: Recipe Book App
 
 ## :gear: Source
 
