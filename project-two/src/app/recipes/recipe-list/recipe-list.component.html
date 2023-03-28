@@ -10,6 +10,9 @@
 
 <div class="grid">
   <app-recipe-item
+    class="mb-4 last:mb-0"
+    [routerLink]="['/recipes', recipe.id]"
+    routerLinkActive="bg-gray-200"
     *ngFor="let recipe of recipes; let i = index"
     [recipe]="recipe"
   ></app-recipe-item>

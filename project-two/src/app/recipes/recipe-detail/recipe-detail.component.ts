@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Recipe } from '../models/recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -11,12 +12,21 @@ export class RecipeDetailComponent implements OnInit {
   visibilityClasses: {};
   private isVisible: boolean = false;
 
-  @Input() recipe: Recipe;
+  recipe: Recipe;
+  id: number;
 
-  constructor(private _recipeService: RecipeService) {}
+  constructor(
+    private _recipeService: RecipeService,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.setVisibilityClasses();
+
+    this._route.params.subscribe((params: Params) => {
+      this.id = +params.id;
+      this.recipe = this._recipeService.getRecipe(this.id);
+    });
   }
 
   toggleVisible(isVisible: boolean): void {
