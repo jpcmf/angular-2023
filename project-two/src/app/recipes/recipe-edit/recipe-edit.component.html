@@ -1,1 +1,94 @@
-<p>recipe-edit works!</p>
+<div class="grid">
+  <form>
+    <div class="flex gap-2">
+      <h2 class="text-4xl font-medium">Edit Recipe</h2>
+      <div class="flex gap-2 ml-auto">
+        <button
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
+          type="submit"
+        >
+          <!-- {{ editMode ? "Update" : "Add" }} -->
+          Save
+        </button>
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
+
+    <div class="grid gap-4 mb-6">
+      <div>
+        <label
+          for="name"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Name</label
+        >
+        <input
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          id="name"
+          name="name"
+          type="text"
+        />
+      </div>
+      <div>
+        <label
+          for="imagePath"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Image URL</label
+        >
+        <input
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          id="imagePath"
+          name="imagePath"
+          type="text"
+        />
+      </div>
+      <div>
+        <div>
+          <img src="" alt="" class="object-cover w-48 h-48" />
+        </div>
+      </div>
+      <div>
+        <label
+          for="description"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Description</label
+        >
+        <textarea
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          id="description"
+          name="description"
+          type="text"
+          rows="6"
+        ></textarea>
+      </div>
+      <div class="flex gap-2">
+        <div>
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="text"
+          />
+        </div>
+        <div>
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="number"
+          />
+        </div>
+        <div>
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
+            type="button"
+          >
+            X
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
