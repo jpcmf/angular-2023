@@ -1,5 +1,5 @@
 <div class="grid">
-  <form>
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
     <div class="flex gap-2">
       <h2 class="text-4xl font-medium">Edit Recipe</h2>
       <div class="flex gap-2 ml-auto">
@@ -33,6 +33,7 @@
           id="name"
           name="name"
           type="text"
+          formControlName="name"
         />
       </div>
       <div>
@@ -46,6 +47,7 @@
           id="imagePath"
           name="imagePath"
           type="text"
+          formControlName="imagePath"
         />
       </div>
       <div>
@@ -65,6 +67,7 @@
           name="description"
           type="text"
           rows="6"
+          formControlName="description"
         ></textarea>
       </div>
       <div class="flex gap-2">
