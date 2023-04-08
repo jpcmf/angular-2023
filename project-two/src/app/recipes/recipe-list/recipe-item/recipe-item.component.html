@@ -1,5 +1,7 @@
 <a
   class="border border-gray-300 flex px-3 py-3 hover:bg-gray-200 cursor-pointer"
+  [routerLink]="[index]"
+  routerLinkActive="bg-gray-200"
 >
   <div class="flex flex-col flex-1">
     <h4 class="font-medium text-2xl">{{ recipe.name }}</h4>

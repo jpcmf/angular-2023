@@ -10,11 +10,18 @@
 <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
 
 <div class="grid">
-  <app-recipe-item
+  <!-- <app-recipe-item
     class="mb-4 last:mb-0"
-    [routerLink]="['/recipes', recipe.id]"
+    [routerLink]="['/recipes', recipe.index]"
     routerLinkActive="bg-gray-200"
     *ngFor="let recipe of recipes; let i = index"
     [recipe]="recipe"
+    [index]="i"
+  ></app-recipe-item> -->
+  <app-recipe-item
+    class="mb-4 last:mb-0"
+    *ngFor="let recipe of recipes; let i = index"
+    [recipe]="recipe"
+    [index]="i"
   ></app-recipe-item>
 </div>
