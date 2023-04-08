@@ -50,11 +50,17 @@
           name="imagePath"
           type="text"
           formControlName="imagePath"
+          #imagePath
         />
       </div>
       <div>
         <div>
-          <img src="" alt="" class="object-cover w-48 h-48" />
+          <img
+            [src]="imagePath.value"
+            [alt]="recipeForm.get('name').value"
+            [title]="recipeForm.get('name').value"
+            class="object-cover w-96 h-96 m-auto border border-gray-300 p-4"
+          />
         </div>
       </div>
       <div>
