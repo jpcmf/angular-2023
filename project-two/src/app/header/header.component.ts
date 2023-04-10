@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ export class HeaderComponent implements OnInit {
   visibilityClasses: {};
   private isVisible: boolean = false;
 
-  constructor() {}
+  constructor(private _dataStorageService: DataStorageService) {}
 
   ngOnInit(): void {
     this.setVisibilityClasses();
@@ -22,5 +23,9 @@ export class HeaderComponent implements OnInit {
 
   private setVisibilityClasses(): void {
     this.visibilityClasses = { hidden: !this.isVisible, '': this.isVisible };
+  }
+
+  onSaveData(): void {
+    this._dataStorageService.storeRecipes();
   }
 }

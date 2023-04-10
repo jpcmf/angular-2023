@@ -18,6 +18,8 @@ export class DataStorageService {
     const url =
       'https://ng-course-recipe-book-237e4-default-rtdb.firebaseio.com/recipes.json';
 
-    return this._http.put(url, recipes);
+    return this._http.put(url, recipes).subscribe((response) => {
+      console.log(response);
+    });
   }
 }
