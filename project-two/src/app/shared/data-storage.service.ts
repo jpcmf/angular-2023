@@ -1,9 +1,9 @@
+import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/models/recipe.model';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -29,21 +29,18 @@ export class DataStorageService {
     const url =
       'https://ng-course-recipe-book-237e4-default-rtdb.firebaseio.com/recipes.json';
 
-    this._http
-      .get<Recipe[]>(url)
-      .pipe(
-        map((recipes) => {
-          return recipes.map((recipes) => {
-            return {
-              ...recipes,
-              ingredients: recipes.ingredients ? recipes.ingredients : [],
-            };
-          });
-        })
-      )
-      .subscribe((recipes) => {
-        // console.log(recipes);
+    return this._http.get<Recipe[]>(url).pipe(
+      map((recipes) => {
+        return recipes.map((recipes) => {
+          return {
+            ...recipes,
+            ingredients: recipes.ingredients ? recipes.ingredients : [],
+          };
+        });
+      }),
+      tap((recipes) => {
         this._recipeService.setRecipes(recipes);
-      });
+      })
+    );
   }
 }
