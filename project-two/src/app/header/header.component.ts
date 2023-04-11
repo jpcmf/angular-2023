@@ -28,4 +28,8 @@ export class HeaderComponent implements OnInit {
   onSaveData(): void {
     this._dataStorageService.storeRecipes();
   }
+
+  onFetchData(): void {
+    this._dataStorageService.fetchRecipes();
+  }
 }
