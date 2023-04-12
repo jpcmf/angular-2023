@@ -5,12 +5,18 @@
       <h1 class="text-2xl font-bold text-gray-500">Recipe Book</h1>
     </div>
     <nav class="hidden md:flex items-center w-full">
-      <div class="px-8">
+      <div class="flex gap-2 px-8">
         <a
           [routerLink]="['recipes']"
           routerLinkActive="bg-gray-700 text-white"
           class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-md text-sm font-medium"
           >Recipes</a
+        >
+        <a
+          [routerLink]="['auth']"
+          routerLinkActive="bg-gray-700 text-white"
+          class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-md text-sm font-medium"
+          >Authenticate</a
         >
         <a
           [routerLink]="['shopping-list']"
