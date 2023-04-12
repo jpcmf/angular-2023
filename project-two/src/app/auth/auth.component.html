@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 place-items-center">
-  <form>
-    <div class="mb-4">
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <div class="mb-4 w-96">
       <label
         for="email"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -12,6 +12,11 @@
         type="email"
         formControlName="email"
       />
+      <span
+        *ngIf="!authForm.get('email').valid && authForm.get('email').touched"
+        class="text-red-500 text-xs"
+        >Please enter a valid email.</span
+      >
     </div>
     <div class="mb-4">
       <label
@@ -25,22 +30,29 @@
         type="password"
         formControlName="password"
       />
+      <span
+        *ngIf="
+          !authForm.get('password').valid && authForm.get('password').touched
+        "
+        class="text-red-500 text-xs"
+        >Please enter a password.</span
+      >
     </div>
 
     <div class="flex gap-4">
       <button
         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
-        type="button"
-        (click)="onFunc()"
+        type="submit"
+        [disabled]="!authForm.valid"
       >
-        Sign Up
+        {{ isLoginMode ? "Login" : "Sign Up" }}
       </button>
       <button
         class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-200"
         type="button"
-        (click)="onFunc()"
+        (click)="onSwithMode()"
       >
-        Switch to Login
+        Switch to {{ isLoginMode ? "Sign Up" : "Login" }}
       </button>
     </div>
   </form>
