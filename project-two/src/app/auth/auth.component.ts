@@ -11,6 +11,7 @@ export class AuthComponent implements OnInit {
   isLoginMode: boolean = true;
   isLoading = false;
   authForm: FormGroup;
+  error: string = null;
 
   constructor(private _authService: AuthService) {}
 
@@ -45,8 +46,16 @@ export class AuthComponent implements OnInit {
           console.log(responseData);
           this.isLoading = false;
         },
-        (error) => {
-          console.log(error);
+        (errorResponse) => {
+          console.log(errorResponse);
+          switch (errorResponse.error.error.message) {
+            case 'EMAIL_EXISTS':
+              this.error =
+                'The email address is already in use by another account.';
+              break;
+            default:
+              break;
+          }
           this.isLoading = false;
         }
       );
