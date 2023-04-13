@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { User } from './models/user.model';
 
 export interface AuthResponseData {
   idToken: string;
@@ -17,6 +18,8 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
+  user = new Subject<User>();
+
   constructor(private _http: HttpClient) {}
 
   onSignUp(email: string, password: string) {
@@ -29,7 +32,17 @@ export class AuthService {
         password: password,
         returnSecureToken: true,
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        tap((responseData) =>
+          this.handleAuthentication(
+            responseData.email,
+            responseData.localId,
+            responseData.idToken,
+            +responseData.expiresIn
+          )
+        )
+      );
   }
 
   onSignIn(email: string, password: string) {
@@ -42,7 +55,28 @@ export class AuthService {
         password: password,
         returnSecureToken: true,
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        tap((responseData) =>
+          this.handleAuthentication(
+            responseData.email,
+            responseData.localId,
+            responseData.idToken,
+            +responseData.expiresIn
+          )
+        )
+      );
+  }
+
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, userId, token, expirationDate);
+    this.user.next(user);
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
