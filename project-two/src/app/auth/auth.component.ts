@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   isLoginMode: boolean = true;
+  isLoading = false;
   authForm: FormGroup;
 
   constructor(private _authService: AuthService) {}
@@ -33,6 +34,8 @@ export class AuthComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
+
     const email = this.authForm.value.email;
     const password = this.authForm.value.password;
 
@@ -40,9 +43,11 @@ export class AuthComponent implements OnInit {
       this._authService.onSignUp(email, password).subscribe(
         (responseData) => {
           console.log(responseData);
+          this.isLoading = false;
         },
         (error) => {
           console.log(error);
+          this.isLoading = false;
         }
       );
     } else {

@@ -1,5 +1,8 @@
 <div class="grid grid-cols-1 place-items-center">
-  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
     <div class="mb-4 w-96">
       <label
         for="email"
