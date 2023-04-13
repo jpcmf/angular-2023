@@ -1,6 +1,7 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from './auth.service';
+import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -40,28 +41,25 @@ export class AuthComponent implements OnInit {
     const email = this.authForm.value.email;
     const password = this.authForm.value.password;
 
+    let authObs: Observable<AuthResponseData>;
+
     if (!this.isLoginMode) {
-      this._authService.onSignUp(email, password).subscribe(
-        (responseData) => {
-          console.log(responseData);
-          this.isLoading = false;
-        },
-        (errorResponse) => {
-          console.log(errorResponse);
-          switch (errorResponse.error.error.message) {
-            case 'EMAIL_EXISTS':
-              this.error =
-                'The email address is already in use by another account.';
-              break;
-            default:
-              break;
-          }
-          this.isLoading = false;
-        }
-      );
+      authObs = this._authService.onSignUp(email, password);
     } else {
-      //...
+      authObs = this._authService.onSignIn(email, password);
     }
+
+    authObs.subscribe(
+      (responseData) => {
+        console.log(responseData);
+        this.isLoading = false;
+      },
+      (errorMessage) => {
+        console.log(errorMessage);
+        this.error = errorMessage;
+        this.isLoading = false;
+      }
+    );
 
     this.authForm.reset();
   }
