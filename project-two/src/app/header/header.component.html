@@ -7,12 +7,14 @@
     <nav class="hidden md:flex items-center w-full">
       <div class="flex gap-2 px-8">
         <a
+          *ngIf="isAuthenticated"
           [routerLink]="['recipes']"
           routerLinkActive="bg-gray-700 text-white"
           class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-md text-sm font-medium"
           >Recipes</a
         >
         <a
+          *ngIf="!isAuthenticated"
           [routerLink]="['auth']"
           routerLinkActive="bg-gray-700 text-white"
           class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-md text-sm font-medium"
@@ -26,7 +28,7 @@
         >
       </div>
 
-      <div class="relative ml-auto">
+      <div class="relative ml-auto" *ngIf="isAuthenticated">
         <button
           class="flex text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
           id="dropdown-menu"
@@ -67,6 +69,12 @@
               class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
               role="menuitem"
               >Fetch Data</a
+            >
+            <a
+              (click)="onFetchData()"
+              class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+              role="menuitem"
+              >Logout</a
             >
           </div>
         </div>
