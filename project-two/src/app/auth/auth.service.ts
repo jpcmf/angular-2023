@@ -20,6 +20,7 @@ export interface AuthResponseData {
 })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
 
   constructor(private _http: HttpClient, private _router: Router) {}
 
@@ -90,12 +91,31 @@ export class AuthService {
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLogout(expirationDuration);
     }
   }
 
   onLogout() {
     this.user.next(null);
     this._router.navigate(['/auth']);
+
+    localStorage.removeItem('@userData');
+
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    console.log(expirationDuration);
+
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.onLogout();
+    }, expirationDuration);
   }
 
   private handleAuthentication(
@@ -107,6 +127,9 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
+
+    this.autoLogout(expiresIn * 1000);
+
     //...
     //persist user data to the local storage to prevent lost the information when reload page
     //security issue?
