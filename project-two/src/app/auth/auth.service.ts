@@ -4,6 +4,7 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from './models/user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   idToken: string;
@@ -20,7 +21,7 @@ export interface AuthResponseData {
 export class AuthService {
   user = new BehaviorSubject<User>(null);
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient, private _router: Router) {}
 
   onSignUp(email: string, password: string) {
     const API_KEY = environment.apiKey;
@@ -66,6 +67,11 @@ export class AuthService {
           )
         )
       );
+  }
+
+  onLogout() {
+    this.user.next(null);
+    this._router.navigate(['/auth']);
   }
 
   private handleAuthentication(
