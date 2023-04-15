@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 place-items-center">
-  <div class="bg-white text-center py-4 lg:px-4" *ngIf="error">
+  <!-- <div class="bg-white text-center py-4 lg:px-4" *ngIf="error">
     <div
       class="p-2 bg-red-800 items-center text-white leading-none lg:rounded-full flex lg:inline-flex"
       role="alert"
@@ -10,7 +10,13 @@
       >
       <span class="font-semibold mr-2 text-left flex-auto">{{ error }}</span>
     </div>
-  </div>
+  </div> -->
+
+  <app-alert
+    [message]="error"
+    *ngIf="error"
+    (close)="onHandleClose()"
+  ></app-alert>
 
   <div *ngIf="isLoading">
     <app-loading-spinner></app-loading-spinner>
