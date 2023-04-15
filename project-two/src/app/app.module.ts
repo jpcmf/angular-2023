@@ -5,20 +5,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
-import { DropdownDirective } from './shared/directives/dropdown.directive';
-import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { AuthComponent } from './auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AlertComponent } from './shared/alert/alert/alert.component';
+
+import { RecipesModule } from './recipes/recipes.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { RecipeService } from './recipes/recipe.service';
-import { AuthComponent } from './auth/auth.component';
-import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { ShoppingListService } from './shopping-list/shopping-list.service';
+
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { AlertComponent } from './shared/alert/alert/alert.component';
+
+import { DropdownDirective } from './shared/directives/dropdown.directive';
 import { PlaceholderDirective } from './shared/directives/placeholder.directive';
-import { RecipesModule } from './recipes/recipes.module';
 
 @NgModule({
   declarations: [
@@ -37,8 +39,8 @@ import { RecipesModule } from './recipes/recipes.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule,
     RecipesModule,
+    AppRoutingModule, // This it is important that AppRoutingModule is the last imported one if it contains a wildcard route.
   ],
   providers: [
     ShoppingListService,
