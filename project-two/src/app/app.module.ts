@@ -5,8 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert/alert.component';
@@ -21,13 +19,12 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 
 import { DropdownDirective } from './shared/directives/dropdown.directive';
 import { PlaceholderDirective } from './shared/directives/placeholder.directive';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
     DropdownDirective,
     AuthComponent,
     LoadingSpinnerComponent,
@@ -40,6 +37,7 @@ import { PlaceholderDirective } from './shared/directives/placeholder.directive'
     ReactiveFormsModule,
     HttpClientModule,
     RecipesModule,
+    ShoppingListModule,
     AppRoutingModule, // This it is important that AppRoutingModule is the last imported one if it contains a wildcard route.
   ],
   providers: [
