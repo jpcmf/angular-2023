@@ -12,9 +12,6 @@ import { RecipesModule } from './recipes/recipes.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
-import { RecipeService } from './recipes/recipe.service';
-import { ShoppingListService } from './shopping-list/shopping-list.service';
-
 import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
@@ -30,8 +27,6 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     SharedModule,
   ],
   providers: [
-    ShoppingListService,
-    RecipeService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
