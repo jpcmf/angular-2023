@@ -8,6 +8,8 @@ import { HeaderComponent } from './header/header.component';
 import { CoreModule } from './core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -17,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     SharedModule,
     CoreModule,
     AppRoutingModule, // This it is important that AppRoutingModule is the last imported one if it contains a wildcard route.
+    StoreModule.forRoot({ shoppingList: shoppingListReducer }),
   ],
   bootstrap: [AppComponent],
 })
