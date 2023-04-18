@@ -18,8 +18,8 @@ import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer
     HttpClientModule,
     SharedModule,
     CoreModule,
-    AppRoutingModule, // This it is important that AppRoutingModule is the last imported one if it contains a wildcard route.
     StoreModule.forRoot({ shoppingList: shoppingListReducer }),
+    AppRoutingModule, // This it is important that AppRoutingModule is the last imported one if it contains a wildcard route.
   ],
   bootstrap: [AppComponent],
 })
