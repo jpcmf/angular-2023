@@ -9,7 +9,10 @@
     >
       <li
         class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600 last:border-b-0 cursor-pointer"
-        *ngFor="let ingredient of ingredients; let i = index"
+        *ngFor="
+          let ingredient of (ingredients | async).ingredients;
+          let i = index
+        "
         (click)="onEditItem(i)"
       >
         <span>{{ ingredient.name }} ({{ ingredient.amount }})</span>
