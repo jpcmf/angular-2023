@@ -5,6 +5,9 @@ import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from './models/user.model';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 export interface AuthResponseData {
   idToken: string;
@@ -22,7 +25,11 @@ export class AuthService {
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private _http: HttpClient, private _router: Router) {}
+  constructor(
+    private _http: HttpClient,
+    private _router: Router,
+    private _store: Store<fromApp.AppState>
+  ) {}
 
   onSignUp(email: string, password: string) {
     const API_KEY = environment.apiKey;
@@ -90,7 +97,15 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      this.user.next(loadedUser);
+      // this.user.next(loadedUser);
+      this._store.dispatch(
+        new AuthActions.Login({
+          email: loadedUser.email,
+          userId: loadedUser.id,
+          token: loadedUser.token,
+          expirationDate: new Date(userData._tokenExpirationDate),
+        })
+      );
       const expirationDuration =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
@@ -99,7 +114,8 @@ export class AuthService {
   }
 
   onLogout() {
-    this.user.next(null);
+    // this.user.next(null);
+    this._store.dispatch(new AuthActions.Logout());
     this._router.navigate(['/auth']);
 
     localStorage.removeItem('@userData');
@@ -126,7 +142,10 @@ export class AuthService {
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
-    this.user.next(user);
+    // this.user.next(user);
+    this._store.dispatch(
+      new AuthActions.Login({ email, userId, token, expirationDate })
+    );
 
     this.autoLogout(expiresIn * 1000);
 
