@@ -10,25 +10,25 @@ export const STOP_EDIT = 'STOP_EDIT';
 
 export class AddIngredient implements Action {
   readonly type = ADD_INGREDIENT; // type safety
-  // payload: Ingredient;
+
   constructor(public payload: Ingredient) {}
 }
 
 export class AddIngredients implements Action {
   readonly type = ADD_INGREDIENTS; // type safety
-  // payload: Ingredient;
+
   constructor(public payload: Ingredient[]) {}
 }
 export class UpdateIngredient implements Action {
   readonly type = UPDATE_INGREDIENT; // type safety
-  // payload: Ingredient;
-  constructor(public payload: { index: number; ingredient: Ingredient }) {}
+
+  constructor(public payload: Ingredient) {}
 }
 
 export class DeleteIngredient implements Action {
   readonly type = DELETE_INGREDIENT; // type safety
-  // payload: Ingredient;
-  constructor(public payload: number) {}
+
+  // constructor(public payload: number) {}
 }
 
 export class StartEdit implements Action {
