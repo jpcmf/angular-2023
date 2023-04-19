@@ -5,6 +5,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Ingredient } from './models/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
 import * as fromShoppingList from './store/shopping-list.reducer';
+import * as ShoppingListActions from './store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list',
@@ -39,6 +40,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   onEditItem(index: number) {
-    this._shoppingListService.startedEditing.next(index);
+    // this._shoppingListService.startedEditing.next(index);
+    this._store.dispatch(new ShoppingListActions.StartEdit(index));
   }
 }

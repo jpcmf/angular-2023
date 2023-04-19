@@ -53,12 +53,12 @@ export function shoppingListReducer(
     case ShoppingListActions.START_EDIT:
       return {
         ...state,
-        editIngredientIndex: action.payload,
+        editedIngredientIndex: action.payload,
         editIngredient: { ...state.ingredients[action.payload] },
       };
 
     case ShoppingListActions.STOP_EDIT:
-      return { ...state, editIngredient: null, editIngredientIndex: -1 };
+      return { ...state, editIngredient: null, editedIngredientIndex: -1 };
 
     default:
       return state;
