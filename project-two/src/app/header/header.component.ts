@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
 
 @Component({
   selector: 'app-header',
@@ -16,16 +19,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private _dataStorageService: DataStorageService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
     this.setVisibilityClasses();
-    this.userSubscription = this._authService.user.subscribe((user) => {
-      this.isAuthenticated = !user ? false : true; // we can use !!user
-      console.log(!user);
-      console.log(!!user);
-    });
+    // this.userSubscription = this._authService.user.subscribe((user) => {
+    //   this.isAuthenticated = !user ? false : true; // we can use !!user
+    //   console.log(!user);
+    //   console.log(!!user);
+    // });
+
+    this.userSubscription = this._store
+      .select('auth')
+      .pipe(map((authState) => authState.user))
+      .subscribe((user) => {
+        this.isAuthenticated = !user ? false : true; // we can use !!user
+        console.log(!user);
+        console.log(!!user);
+      });
   }
 
   ngOnDestroy(): void {
