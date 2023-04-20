@@ -17,8 +17,78 @@ export interface AuthResponseData {
   registered?: boolean;
 }
 
+//helper function *DRY*
+const handleAuth = (
+  email: string,
+  userId: string,
+  token: string,
+  expiresIn: number
+) => {
+  const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+  return new AuthActions.AuthSuccess({
+    email: email,
+    userId: userId,
+    token: token,
+    expirationDate: expirationDate,
+  });
+};
+
+//helper function *DRY*
+const handleError = (errorResponse: any) => {
+  let errorMessage = 'An unknown error occurred!';
+  if (!errorResponse.error || !errorResponse.error.error) {
+    return of(new AuthActions.AuthFail(errorMessage));
+  }
+  switch (errorResponse.error.error.message) {
+    case 'EMAIL_EXISTS':
+      errorMessage = 'The email address is already in use by another account.';
+      break;
+    case 'EMAIL_NOT_FOUND':
+      errorMessage =
+        'There is no user record corresponding to this identifier. The user may have been deleted.';
+      break;
+    case 'INVALID_PASSWORD':
+      errorMessage =
+        'The password is invalid or the user does not have a password.';
+      break;
+    default:
+      break;
+  }
+  return of(new AuthActions.AuthFail(errorMessage));
+};
+
 @Injectable()
 export class AuthEffects {
+  authSignUp = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.SIGNUP_START),
+      switchMap((signupAction: AuthActions.SignupStart) => {
+        const API_KEY = environment.apiKey;
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
+
+        return this._http
+          .post<AuthResponseData>(url, {
+            email: signupAction.payload.email,
+            password: signupAction.payload.password,
+            returnSecureToken: true,
+          })
+          .pipe(
+            map((resData) => {
+              return handleAuth(
+                resData.email,
+                resData.localId,
+                resData.idToken,
+                +resData.expiresIn
+              );
+            }),
+            catchError((errorResponse) => {
+              return handleError(errorResponse);
+            })
+          );
+      })
+    )
+  );
+
   authLogin = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.LOGIN_START),
@@ -34,38 +104,15 @@ export class AuthEffects {
           })
           .pipe(
             map((resData) => {
-              const expirationDate = new Date(
-                new Date().getTime() + +resData.expiresIn * 1000
+              return handleAuth(
+                resData.email,
+                resData.localId,
+                resData.idToken,
+                +resData.expiresIn
               );
-              return new AuthActions.AuthSuccess({
-                email: resData.email,
-                userId: resData.localId,
-                token: resData.idToken,
-                expirationDate: expirationDate,
-              });
             }),
             catchError((errorResponse) => {
-              let errorMessage = 'An unknown error occurred!';
-              if (!errorResponse.error || !errorResponse.error.error) {
-                return of(new AuthActions.AuthFail(errorMessage));
-              }
-              switch (errorResponse.error.error.message) {
-                case 'EMAIL_EXISTS':
-                  errorMessage =
-                    'The email address is already in use by another account.';
-                  break;
-                case 'EMAIL_NOT_FOUND':
-                  errorMessage =
-                    'There is no user record corresponding to this identifier. The user may have been deleted.';
-                  break;
-                case 'INVALID_PASSWORD':
-                  errorMessage =
-                    'The password is invalid or the user does not have a password.';
-                  break;
-                default:
-                  break;
-              }
-              return of(new AuthActions.AuthFail(errorMessage));
+              return handleError(errorResponse);
             })
 
             // map((resData) => {
