@@ -5,6 +5,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthResponseData, AuthService } from './auth.service';
 import { AlertComponent } from '../shared/alert/alert/alert.component';
 import { PlaceholderDirective } from '../shared/directives/placeholder.directive';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +23,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective;
 
-  constructor(private _authService: AuthService, private _router: Router) {}
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+    private _store: Store<fromApp.AppState>
+  ) {}
 
   ngOnInit(): void {
     this.authForm = new FormGroup({
@@ -29,6 +36,15 @@ export class AuthComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(6),
       ]),
+    });
+
+    this._store.select('auth').subscribe((authState) => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+
+      if (this.error) {
+        this.showErrorAlert(this.error);
+      }
     });
   }
 
@@ -52,22 +68,25 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (!this.isLoginMode) {
       authObs = this._authService.onSignUp(email, password);
     } else {
-      authObs = this._authService.onSignIn(email, password);
+      // authObs = this._authService.onSignIn(email, password);
+      this._store.dispatch(
+        new AuthActions.LoginStart({ email: email, password: password })
+      );
     }
 
-    authObs.subscribe(
-      (responseData) => {
-        console.log(responseData);
-        this.isLoading = false;
-        this._router.navigate(['/recipes']);
-      },
-      (errorMessage) => {
-        console.log(errorMessage);
-        this.error = errorMessage;
-        this.showErrorAlert(errorMessage);
-        this.isLoading = false;
-      }
-    );
+    // authObs.subscribe(
+    //   (responseData) => {
+    //     console.log(responseData);
+    //     this.isLoading = false;
+    //     this._router.navigate(['/recipes']);
+    //   },
+    //   (errorMessage) => {
+    //     console.log(errorMessage);
+    //     this.error = errorMessage;
+    //     this.showErrorAlert(errorMessage);
+    //     this.isLoading = false;
+    //   }
+    // );
 
     this.authForm.reset();
   }
