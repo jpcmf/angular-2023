@@ -131,10 +131,10 @@ export class AuthEffects {
     )
   );
 
-  authSuccess = createEffect(
+  authRedirect = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.AUTH_SUCCESS),
+        ofType(AuthActions.AUTH_SUCCESS, AuthActions.LOGOUT),
         tap(() => {
           this._router.navigate(['/']);
         })

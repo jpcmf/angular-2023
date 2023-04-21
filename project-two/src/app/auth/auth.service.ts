@@ -31,51 +31,51 @@ export class AuthService {
     private _store: Store<fromApp.AppState>
   ) {}
 
-  onSignUp(email: string, password: string) {
-    const API_KEY = environment.apiKey;
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
+  // onSignUp(email: string, password: string) {
+  //   const API_KEY = environment.apiKey;
+  //   const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
 
-    return this._http
-      .post<AuthResponseData>(url, {
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      })
-      .pipe(
-        catchError(this.handleError),
-        tap((responseData) =>
-          this.handleAuthentication(
-            responseData.email,
-            responseData.localId,
-            responseData.idToken,
-            +responseData.expiresIn
-          )
-        )
-      );
-  }
+  //   return this._http
+  //     .post<AuthResponseData>(url, {
+  //       email: email,
+  //       password: password,
+  //       returnSecureToken: true,
+  //     })
+  //     .pipe(
+  //       catchError(this.handleError),
+  //       tap((responseData) =>
+  //         this.handleAuthentication(
+  //           responseData.email,
+  //           responseData.localId,
+  //           responseData.idToken,
+  //           +responseData.expiresIn
+  //         )
+  //       )
+  //     );
+  // }
 
-  onSignIn(email: string, password: string) {
-    const API_KEY = environment.apiKey;
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
+  // onSignIn(email: string, password: string) {
+  //   const API_KEY = environment.apiKey;
+  //   const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
 
-    return this._http
-      .post<AuthResponseData>(url, {
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      })
-      .pipe(
-        catchError(this.handleError),
-        tap((responseData) =>
-          this.handleAuthentication(
-            responseData.email,
-            responseData.localId,
-            responseData.idToken,
-            +responseData.expiresIn
-          )
-        )
-      );
-  }
+  //   return this._http
+  //     .post<AuthResponseData>(url, {
+  //       email: email,
+  //       password: password,
+  //       returnSecureToken: true,
+  //     })
+  //     .pipe(
+  //       catchError(this.handleError),
+  //       tap((responseData) =>
+  //         this.handleAuthentication(
+  //           responseData.email,
+  //           responseData.localId,
+  //           responseData.idToken,
+  //           +responseData.expiresIn
+  //         )
+  //       )
+  //     );
+  // }
 
   autoSignIn() {
     const userData: {
@@ -116,7 +116,7 @@ export class AuthService {
   onLogout() {
     // this.user.next(null);
     this._store.dispatch(new AuthActions.Logout());
-    this._router.navigate(['/auth']);
+    // this._router.navigate(['/auth']);
 
     localStorage.removeItem('@userData');
 

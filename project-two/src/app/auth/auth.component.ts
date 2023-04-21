@@ -20,6 +20,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   authForm: FormGroup;
   error: string = null;
   private subscription: Subscription;
+  private storeSubscription: Subscription;
 
   @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective;
 
@@ -38,14 +39,16 @@ export class AuthComponent implements OnInit, OnDestroy {
       ]),
     });
 
-    this._store.select('auth').subscribe((authState) => {
-      this.isLoading = authState.loading;
-      this.error = authState.authError;
+    this.storeSubscription = this._store
+      .select('auth')
+      .subscribe((authState) => {
+        this.isLoading = authState.loading;
+        this.error = authState.authError;
 
-      if (this.error) {
-        this.showErrorAlert(this.error);
-      }
-    });
+        if (this.error) {
+          this.showErrorAlert(this.error);
+        }
+      });
   }
 
   onSwithMode(): void {
@@ -95,12 +98,16 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onHandleClose() {
-    this.error = null;
+    // this.error = null;
+    this._store.dispatch(new AuthActions.ClearError());
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.storeSubscription) {
+      this.storeSubscription.unsubscribe();
     }
   }
 
