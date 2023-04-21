@@ -113,25 +113,33 @@ export class AuthService {
   //   }
   // }
 
-  onLogout() {
-    // this.user.next(null);
-    this._store.dispatch(new AuthActions.Logout());
-    // this._router.navigate(['/auth']);
+  // onLogout() {
+  //   // this.user.next(null);
+  //   this._store.dispatch(new AuthActions.Logout());
+  //   // this._router.navigate(['/auth']);
 
-    localStorage.removeItem('@userData');
+  //   localStorage.removeItem('@userData');
 
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    this.tokenExpirationTimer = null;
-  }
+  //   if (this.tokenExpirationTimer) {
+  //     clearTimeout(this.tokenExpirationTimer);
+  //   }
+  //   this.tokenExpirationTimer = null;
+  // }
 
-  autoLogout(expirationDuration: number) {
+  setLogoutTimer(expirationDuration: number) {
     console.log(expirationDuration);
 
     this.tokenExpirationTimer = setTimeout(() => {
-      this.onLogout();
+      // this.onLogout();
+      this._store.dispatch(new AuthActions.Logout());
     }, expirationDuration);
+  }
+
+  clearLogoutTimer() {
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+      this.tokenExpirationTimer = null;
+    }
   }
 
   // private handleAuthentication(

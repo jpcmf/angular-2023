@@ -8,6 +8,7 @@ import * as AuthActions from './auth.actions';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
+import { AuthService } from '../auth.service';
 
 export interface AuthResponseData {
   idToken: string;
@@ -77,6 +78,9 @@ export class AuthEffects {
             returnSecureToken: true,
           })
           .pipe(
+            tap((resData) => {
+              this._authService.setLogoutTimer(+resData.expiresIn * 1000);
+            }),
             map((resData) => {
               return handleAuth(
                 resData.email,
@@ -107,6 +111,9 @@ export class AuthEffects {
             returnSecureToken: true,
           })
           .pipe(
+            tap((resData) => {
+              this._authService.setLogoutTimer(+resData.expiresIn * 1000);
+            }),
             map((resData) => {
               return handleAuth(
                 resData.email,
@@ -138,7 +145,7 @@ export class AuthEffects {
   authRedirect = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.AUTH_SUCCESS, AuthActions.LOGOUT),
+        ofType(AuthActions.AUTH_SUCCESS),
         tap(() => {
           this._router.navigate(['/']);
         })
@@ -171,6 +178,12 @@ export class AuthEffects {
         if (loadedUser.token) {
           // this.user.next(loadedUser);
 
+          const expirationDuration =
+            new Date(userData._tokenExpirationDate).getTime() -
+            new Date().getTime();
+
+          this._authService.setLogoutTimer(expirationDuration);
+
           return new AuthActions.AuthSuccess({
             email: loadedUser.email,
             userId: loadedUser.id,
@@ -193,7 +206,9 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.LOGOUT),
         tap(() => {
+          this._authService.clearLogoutTimer();
           localStorage.removeItem('@userData');
+          this._router.navigate(['/auth']);
         })
       ),
     { dispatch: false }
@@ -202,6 +217,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private _http: HttpClient,
-    private _router: Router
+    private _router: Router,
+    private _authService: AuthService
   ) {}
 }
