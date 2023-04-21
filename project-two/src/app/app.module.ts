@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import * as fromApp from './store/app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { RecipeEffects } from './recipes/store/recipe.effects';
+
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -25,7 +27,7 @@ import { environment } from 'src/environments/environment';
     SharedModule,
     CoreModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, RecipeEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     AppRoutingModule, // This it is important that AppRoutingModule is the last imported one if it contains a wildcard route.
