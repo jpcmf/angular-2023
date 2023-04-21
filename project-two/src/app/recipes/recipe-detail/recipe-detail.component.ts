@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -30,22 +30,29 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit(): void {
     this.setVisibilityClasses();
 
-    this._route.params.subscribe((params: Params) => {
-      this.id = +params.id;
-      // this.recipe = this._recipeService.getRecipe(this.id);
-      this._store
-        .select('recipes')
-        .pipe(
-          map((recipesState) => {
-            return recipesState.recipes.find((recipe, index) => {
-              return index === this.id;
-            });
-          })
-        )
-        .subscribe((recipe) => {
-          this.recipe = recipe;
-        });
-    });
+    // this._route.params.subscribe((params: Params) => {
+    //   this.id = +params.id;
+    //   this.recipe = this._recipeService.getRecipe(this.id);
+    // });
+
+    this._route.params
+      .pipe(
+        map((params) => {
+          return +params['id'];
+        }),
+        switchMap((id) => {
+          this.id = id;
+          return this._store.select('recipes');
+        }),
+        map((recipesState) => {
+          return recipesState.recipes.find((recipes, index) => {
+            return index === this.id;
+          });
+        })
+      )
+      .subscribe((recipe) => {
+        this.recipe = recipe;
+      });
   }
 
   toggleVisible(isVisible: boolean): void {
