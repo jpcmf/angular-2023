@@ -1,8 +1,11 @@
-import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+// import { Router } from '@angular/router';
+import {
+  // Observable,
+  Subscription,
+} from 'rxjs';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthResponseData, AuthService } from './auth.service';
+// import { AuthResponseData, AuthService } from './auth.service';
 import { AlertComponent } from '../shared/alert/alert/alert.component';
 import { PlaceholderDirective } from '../shared/directives/placeholder.directive';
 import { Store } from '@ngrx/store';
@@ -25,8 +28,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective;
 
   constructor(
-    private _authService: AuthService,
-    private _router: Router,
+    // private _authService: AuthService,
+    // private _router: Router,
     private _store: Store<fromApp.AppState>
   ) {}
 
