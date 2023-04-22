@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { map, switchMap } from 'rxjs/operators';
 
 import * as fromApp from '../../store/app.reducer';
+import * as RecipesActions from '../store/recipe.actions';
 
 import { RecipeService } from '../recipe.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css'],
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
   id: number;
   editMode: boolean = false;
   recipeForm: FormGroup;
+  private storeSubscription: Subscription;
 
   constructor(
     private _router: Router,
@@ -31,6 +34,12 @@ export class RecipeEditComponent implements OnInit {
       this.editMode = params.id != null;
       this.initForm();
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.storeSubscription) {
+      this.storeSubscription.unsubscribe();
+    }
   }
 
   private initForm() {
@@ -60,7 +69,7 @@ export class RecipeEditComponent implements OnInit {
     // }
 
     if (this.editMode) {
-      this._store
+      this.storeSubscription = this._store
         .select('recipes')
         .pipe(
           map((recipeState) => {
@@ -105,9 +114,16 @@ export class RecipeEditComponent implements OnInit {
     //   this.recipeForm.value.ingredients
     // );
     if (this.editMode) {
-      this._recipeService.updateRecipe(this.id, this.recipeForm.value);
+      // this._recipeService.updateRecipe(this.id, this.recipeForm.value);
+      this._store.dispatch(
+        new RecipesActions.UpdateRecipe({
+          index: this.id,
+          newRecipe: this.recipeForm.value,
+        })
+      );
     } else {
-      this._recipeService.addRecipe(this.recipeForm.value);
+      // this._recipeService.addRecipe(this.recipeForm.value);
+      this._store.dispatch(new RecipesActions.AddRecipe(this.recipeForm.value));
     }
 
     this.onCancel(); // redirect the user to /recipes
