@@ -5,6 +5,7 @@
 - project-one: First steps
 - project-two: Recipe Book App
 - project-three: Standalone Components Demo App
+- project-four: Animations with Angular
 
 ## :gear: Source
 
