@@ -7,7 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 import * as fromApp from '../../store/app.reducer';
 import * as RecipesActions from '../store/recipe.actions';
 
-import { RecipeService } from '../recipe.service';
+// import { RecipeService } from '../recipe.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -24,7 +24,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _recipeService: RecipeService,
+    // private _recipeService: RecipeService,
     private _store: Store<fromApp.AppState>
   ) {}
 
